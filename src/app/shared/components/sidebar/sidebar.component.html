@@ -1,0 +1,30 @@
+<div class="sidebar">
+    <div class="logo-content">
+        <div class="logo">
+            <i class="uil uil-layers"></i>
+            <span class="logo_name">SISTEMA RESERVAS</span>
+        </div>
+    </div>
+
+    <ul class="nav-list">
+        <li *ngFor="let item of mainMenu.defaultOptions">
+            <a [routerLink]="item.router" routerLinkActive="active">
+                <i [class]="item.icon"></i>
+                <span class="links_name">{{ item.name }}</span>
+            </a>
+            <span class="tooltip">{{ item.name }}</span>
+        </li>
+    </ul>
+
+    <div class="separator"></div>
+
+    <ul class="nav-list">
+        <li *ngFor="let item of mainMenu.accessLink">
+            <a [routerLink]="item.router" routerLinkActive="active">
+                <i [class]="item.icon"></i>
+                <span class="links_name">{{ item.name }}</span>
+            </a>
+            <span class="tooltip">{{ item.name }}</span>
+        </li>
+    </ul>
+</div>
