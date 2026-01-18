@@ -3,10 +3,10 @@
         <h1>Gestión de Reservas</h1>
         
         <div class="field">
-            <label>Email:</label>
-            <input formControlName="email" type="email" placeholder="ejemplo@correo.com">
-            <small *ngIf="formLogin.get('email')?.invalid && formLogin.get('email')?.touched" class="error">
-                Email no válido
+            <label>Usuario:</label>
+            <input formControlName="username" type="text" placeholder="Ingrese su usuario">
+            <small *ngIf="formLogin.get('username')?.invalid && formLogin.get('username')?.touched" class="error">
+                El usuario es obligatorio
             </small>
         </div>
 

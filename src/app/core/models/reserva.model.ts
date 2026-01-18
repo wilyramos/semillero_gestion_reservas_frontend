@@ -1,8 +1,17 @@
+import { Sala } from "./sala.model";
+import { UsuarioResponse } from "./usuario.model";
+
+export type ReservaEstado = 'ACTIVA' | 'CANCELADA' | 'FINALIZADA';
+
 export interface Reserva {
-    id: number;
-    fechaInicio: Date;
-    fechaFin: Date;
-    salaId: number;
-    usuarioId: number;
-    estado: 'ACTIVA' | 'CANCELADA' | 'FINALIZADA';
+  idReserva: number;
+  idSala: number;
+  idUsuario: number;
+  fechaInicio: string | Date;
+  fechaFin: string | Date;
+  estado: ReservaEstado;
+  
+  // REVISAR: Relaciones opcionales
+  sala?: Sala;
+  usuario?: UsuarioResponse;
 }
