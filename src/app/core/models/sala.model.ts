@@ -1,5 +1,5 @@
 export interface Sala {
-    idSala: number;
-    nombre: string;
-    capacidad: number;
+  idSala?: number; // Opcional para la creación
+  nombre: string;
+  capacidad: number;
 }

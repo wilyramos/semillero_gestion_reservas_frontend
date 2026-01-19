@@ -7,6 +7,7 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { HeaderUserComponent } from './shared/components/header-user/header-user.component';
 import { CardInfoComponent } from './shared/components/card-info/card-info.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptor } from '@core/interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -21,7 +22,13 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

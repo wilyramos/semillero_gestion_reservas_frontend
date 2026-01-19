@@ -1,1 +1,45 @@
-<p>room-form works!</p>
+<div class="form-container">
+    <div class="form-card">
+        <h3>{{ isEditMode ? 'Editar Sala' : 'Registrar Nueva Sala' }}</h3>
+        <p class="subtitle">Complete la información técnica de la sala.</p>
+
+        <form [formGroup]="roomForm" (ngSubmit)="save()">
+            <div class="form-group">
+                <label for="nombre">Nombre de la Sala</label>
+                <input id="nombre" type="text" formControlName="nombre" placeholder="Ej: Sala de Conferencias A"
+                    [class.input-error]="roomForm.get('nombre')?.invalid && roomForm.get('nombre')?.touched">
+
+                <span class="error-text"
+                    *ngIf="roomForm.get('nombre')?.errors?.['required'] && roomForm.get('nombre')?.touched">
+                    El nombre es obligatorio.
+                </span>
+                <span class="error-text" *ngIf="roomForm.get('nombre')?.errors?.['minlength']">
+                    Debe tener al menos 3 caracteres.
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="capacidad">Capacidad (Personas)</label>
+                <input id="capacidad" type="number" formControlName="capacidad" placeholder="Ej: 10"
+                    [class.input-error]="roomForm.get('capacidad')?.invalid && roomForm.get('capacidad')?.touched">
+
+                <span class="error-text"
+                    *ngIf="roomForm.get('capacidad')?.errors?.['required'] && roomForm.get('capacidad')?.touched">
+                    La capacidad es obligatoria.
+                </span>
+                <span class="error-text" *ngIf="roomForm.get('capacidad')?.errors?.['min']">
+                    La capacidad mínima es 1 persona.
+                </span>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" routerLink="/admin/salas">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-success" [disabled]="roomForm.invalid">
+                    {{ isEditMode ? 'Actualizar Sala' : 'Guardar Sala' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

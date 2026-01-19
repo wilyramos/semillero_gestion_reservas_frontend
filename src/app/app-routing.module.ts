@@ -6,7 +6,7 @@ import { adminGuard } from './core/guards/admin.guard';
 const routes: Routes = [
 
     {
-        path: 'login',
+        path: 'auth',
         loadChildren: () =>
             import('./modules/auth/auth.module').then(m => m.AuthModule)
     },
@@ -40,7 +40,7 @@ const routes: Routes = [
     },
 
     { path: '', redirectTo: 'reservas', pathMatch: 'full' },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: 'auth' }
 ];
 
 @NgModule({

@@ -20,6 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: { Authorization: `Bearer ${token}` }
       });
+      console.log('JWT agregado al encabezado Authorization con token:', token);
     }
     return next.handle(request);
   }
