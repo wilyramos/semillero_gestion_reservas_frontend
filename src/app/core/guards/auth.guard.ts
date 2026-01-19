@@ -3,6 +3,17 @@ import { CanActivateFn, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
 
+
+// is valid token por el tiempo de expiración TODO:
+function isTokenValid(token: string): boolean {
+  try {
+    const decoded: any = jwtDecode(token);
+    const now = Math.floor(Date.now() / 1000);
+    return decoded.exp > now;
+  } catch {
+    return false;
+  }
+}
 export const authGuard: CanActivateFn = (route, state) => {
 
   const cookieService = inject(CookieService);
