@@ -1,33 +1,49 @@
 .sidebar {
-    height: 100vh;
-    width: 250px;
-    background: #11101d;
-    padding: 6px 14px;
+  height: 100vh;
+  width: 240px;
+  background: #f6f6f6;
+  border-right: 1px solid #e5e7eb;
+  padding: 1.5rem 1rem;
 }
 
-.nav-list li {
-    list-style: none;
-    margin: 5px 0;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 2rem;
+  padding: 0 10px;
 }
+
+.logo i { color: #2563eb; font-size: 1.5rem; }
+
+.nav-list { list-style: none; padding: 0; }
 
 .nav-list li a {
-    color: #fff;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 12px;
-    transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #6b7280; /* Gris para inactivos */
+  border-radius: 8px;
+  transition: 0.2s;
+  font-weight: 500;
 }
 
-/* Clase que se aplica automáticamente al estar en la ruta */
+.nav-list li a:hover {
+  background: #eeeeee;
+  color: #2563eb;
+}
+
 .nav-list li a.active {
-    background: #fff;
-    color: #11101d;
+  background: #2563eb;
+  color: #ffffff;
 }
 
 .separator {
-    height: 1px;
-    background: #333;
-    margin: 20px 0;
+  height: 1px;
+  background: #e5e7eb;
+  margin: 1.5rem 0;
 }

@@ -8,6 +8,7 @@ import { HeaderUserComponent } from './shared/components/header-user/header-user
 import { CardInfoComponent } from './shared/components/card-info/card-info.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '@core/interceptors/jwt.interceptor';
+import { SkeletonComponent } from './layouts/skeleton/skeleton.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { JwtInterceptor } from '@core/interceptors/jwt.interceptor';
     AppComponent,
     SidebarComponent,
     HeaderUserComponent,
-    CardInfoComponent
+    CardInfoComponent,
+    SkeletonComponent
   ],
   imports: [
     BrowserModule,

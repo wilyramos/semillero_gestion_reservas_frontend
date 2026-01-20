@@ -12,19 +12,19 @@
                 <i [class]="item.icon"></i>
                 <span class="links_name">{{ item.name }}</span>
             </a>
-            <span class="tooltip">{{ item.name }}</span>
         </li>
     </ul>
 
-    <div class="separator"></div>
-
-    <ul class="nav-list">
-        <li *ngFor="let item of mainMenu.accessLink">
-            <a [routerLink]="item.router" routerLinkActive="active">
-                <i [class]="item.icon"></i>
-                <span class="links_name">{{ item.name }}</span>
-            </a>
-            <span class="tooltip">{{ item.name }}</span>
-        </li>
-    </ul>
+    <div *ngIf="mainMenu.accessLink.length > 0">
+        <div class="separator"></div>
+        <p class="section-title">ADMINISTRACIÓN</p>
+        <ul class="nav-list">
+            <li *ngFor="let item of mainMenu.accessLink">
+                <a [routerLink]="item.router" routerLinkActive="active">
+                    <i [class]="item.icon"></i>
+                    <span class="links_name">{{ item.name }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

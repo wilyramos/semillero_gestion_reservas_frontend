@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,44 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
+  mainMenu: { defaultOptions: Array<any>, accessLink: Array<any> } = { 
+    defaultOptions: [], 
+    accessLink: [] 
+  };
 
-  mainMenu: {
-    defaultOptions: Array<any>,
-    accessLink: Array<any>
-  } = {
-      defaultOptions: [],
-      accessLink: []
-    }
-
-  customOptions: Array<any> = [];
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    // Opciones principales del sistema
+    this.generateMenu();
+  }
+
+  generateMenu(): void {
+    // Opciones para todos
     this.mainMenu.defaultOptions = [
-      {
-        name: 'Salas',
-        icon: 'uil-building',
-        router: ['/', 'rooms']
-      },
-      {
-        name: 'Reservas',
-        icon: 'uil-calendar-alt',
-        router: ['/', 'reservations']
-      },
-      {
-        name: 'Calendario',
-        icon: 'uil-schedule',
-        router: ['/', 'calendar']
-      }
+      { name: 'Calendario', icon: 'uil uil-calendar-alt', router: '/calendario' },
+      { name: 'Mis Reservas', icon: 'uil uil-clipboard-notes', router: '/reservas' }
     ];
 
-    // Opciones secundarias
-    this.mainMenu.accessLink = [
-      {
-        name: 'Panel Admin',
-        icon: 'uil-setting',
-        router: ['/', 'admin']
-      }
-    ];
+    // Para el admin
+    if (this.authService.getRoles().includes('ADMIN')) {
+      this.mainMenu.accessLink = [
+        { name: 'Panel Admin', icon: 'uil uil-chart-pie', router: '/admin/dashboard' },
+        { name: 'Gestión Salas', icon: 'uil uil-building', router: '/admin/salas' }
+      ];
+    }
   }
 }

@@ -1,2 +1,41 @@
-<p>reservations-page works!</p>
-as
+<div class="container">
+  <div class="header-section">
+    <h2>Mis Reservas</h2>
+    <button class="btn btn-primary" routerLink="new">
+      + Nueva Reserva
+    </button>
+  </div>
+
+  <div class="table-container mt-4">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Sala</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let res of reservations">
+          <td>Sala {{ res.idSala }}</td>
+          <td>{{ res.fechaInicio | date:'short' }}</td>
+          <td>{{ res.fechaFin | date:'short' }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="res.estado.toLowerCase()">
+              {{ res.estado }}
+            </span>
+          </td>
+          <td>
+            <button *ngIf="res.estado === 'ACTIVA'" 
+                    class="btn btn-danger" 
+                    (click)="onCancel(res.idReserva)">
+              Cancelar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

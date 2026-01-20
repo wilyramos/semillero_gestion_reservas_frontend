@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,8 @@ import { CalendarPageComponent } from './pages/calendar-page/calendar-page.compo
   ],
   imports: [
     CommonModule,
-    CalendarRoutingModule
+    CalendarRoutingModule,
+    FullCalendarModule
   ]
 })
 export class CalendarModule { }
