@@ -40,4 +40,18 @@ export class AuthService {
     return this.cookieService.get('auth_token');
   }
 
+  getRoles(): string[] {
+    const token = this.getToken();
+    if (!token) {
+      return [];
+    }
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.roles || [];
+    } catch (e) {
+      console.error('Error al decodificar el token:', e);
+      return [];
+    }
+  }
+
 }

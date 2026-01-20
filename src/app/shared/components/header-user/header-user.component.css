@@ -1,0 +1,28 @@
+/* 🔑 CLAVE ANGULAR */
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* CONTENIDO */
+.header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* IZQUIERDA */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9ca3af;
+}
+
+/* DERECHA */
+.user-pill {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
