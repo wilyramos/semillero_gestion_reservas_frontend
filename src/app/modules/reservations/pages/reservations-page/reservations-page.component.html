@@ -1,9 +1,7 @@
 <div class="container">
   <div class="header-section">
     <h2>Mis Reservas</h2>
-    <button class="btn btn-primary" routerLink="new">
-      + Nueva Reserva
-    </button>
+    <button mat-button (click)="openDialog()">+ Nueva Reserva</button>
   </div>
 
   <div class="table-container mt-4">
@@ -28,8 +26,8 @@
             </span>
           </td>
           <td>
-            <button *ngIf="res.estado === 'ACTIVA'" 
-                    class="btn btn-danger" 
+            <button *ngIf="res.estado === 'ACTIVA'"
+                    class="btn btn-danger"
                     (click)="onCancel(res.idReserva)">
               Cancelar
             </button>

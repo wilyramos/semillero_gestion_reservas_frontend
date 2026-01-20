@@ -7,6 +7,9 @@ import { RoomFormComponent } from './components/room-form/room-form.component';
 import { SharedModule } from '@shared/shared.module';
 import { RoomAddPageComponent } from './pages/room-add-page/room-add-page.component';
 import { RoomEditPageComponent } from './pages/room-edit-page/room-edit-page.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -14,12 +17,8 @@ import { RoomEditPageComponent } from './pages/room-edit-page/room-edit-page.com
     RoomsPageComponent,
     RoomFormComponent,
     RoomAddPageComponent,
-    RoomEditPageComponent
+    RoomEditPageComponent,
   ],
-  imports: [
-    CommonModule,
-    RoomsRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, RoomsRoutingModule, SharedModule, MatDialogModule, ReactiveFormsModule, MatSnackBarModule],  // ✅ AGREGAR
 })
-export class RoomsModule { }
+export class RoomsModule {}

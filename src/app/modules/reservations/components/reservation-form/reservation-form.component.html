@@ -1,1 +1,52 @@
-<p>reservation-form works!</p>
+<h1 mat-dialog-title>Registrar Nueva Reserva</h1>
+<div mat-dialog-content>
+  <div class="form-container">
+    <div class="form-card">
+        <p class="subtitle">Complete la información técnica de la reserva.</p>
+
+        <form [formGroup]="roomForm" (ngSubmit)="save()">
+            <div class="form-group">
+                <label for="idSala">Seleccionar Sala</label>
+                <input id="idSala" type="number" formControlName="idSala" placeholder="Id de Sala"
+                    [class.input-error]="roomForm.get('idSala')?.invalid && roomForm.get('idSala')?.touched">
+                <span class="error-text"
+                    *ngIf="roomForm.get('idSala')?.errors?.['required'] && roomForm.get('idSala')?.touched">
+                    El idSala es obligatorio.
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaInicio">Hora de Entrada</label>
+                <input id="fechaInicio" type="datetime-local" formControlName="fechaInicio" placeholder="Ej: Sala de Conferencias A"
+                    [class.input-error]="roomForm.get('fechaInicio')?.invalid && roomForm.get('fechaInicio')?.touched">
+
+                <span class="error-text"
+                    *ngIf="roomForm.get('fechaInicio')?.errors?.['required'] && roomForm.get('fechaInicio')?.touched">
+                    La hora de entrada es obligatoria.
+                </span>
+            </div>
+
+
+            <div class="form-group">
+                <label for="fechaFin">Hora de Salida</label>
+                <input id="fechaFin" type="datetime-local" formControlName="fechaFin" placeholder="Ej: Sala de Conferencias A"
+                    [class.input-error]="roomForm.get('fechaFin')?.invalid && roomForm.get('fechaFin')?.touched">
+
+                <span class="error-text"
+                    *ngIf="roomForm.get('fechaFin')?.errors?.['required'] && roomForm.get('fechaFin')?.touched">
+                    La hora de salida es obligatoria.
+                </span>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" mat-dialog-close>
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-success" [disabled]="roomForm.invalid">
+                    Guardar Reserva
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

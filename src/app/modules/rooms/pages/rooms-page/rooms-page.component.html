@@ -1,8 +1,8 @@
 <div class="container">
     <div class="header-section">
         <h2>Gestión de Salas</h2>
-        <button class="btn btn-primary" routerLink="new">
-            + Nueva Sala
+        <button mat-button (click)="openDialog()">
+          + Nueva Sala
         </button>
     </div>
 
@@ -22,7 +22,7 @@
                     <td>{{ sala.nombre }}</td>
                     <td>{{ sala.capacidad }} personas</td>
                     <td class="actions">
-                        <button class="btn btn-edit" [routerLink]="['edit', sala.idSala]">
+                        <button class="btn btn-edit" (click)="openEditDialog(sala)">
                             Editar
                         </button>
                         <button class="btn btn-delete" (click)="deleteRoom(sala.idSala!)">

@@ -9,7 +9,9 @@ import { CardInfoComponent } from './shared/components/card-info/card-info.compo
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '@core/interceptors/jwt.interceptor';
 import { SkeletonComponent } from './layouts/skeleton/skeleton.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -17,20 +19,23 @@ import { SkeletonComponent } from './layouts/skeleton/skeleton.component';
     SidebarComponent,
     HeaderUserComponent,
     CardInfoComponent,
-    SkeletonComponent
+    SkeletonComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
-      multi: true
+      multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

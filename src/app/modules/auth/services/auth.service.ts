@@ -24,16 +24,23 @@ export class AuthService {
       password: pass
     }).pipe(
       tap(response => {
-        console.log('Respuesta del login:', response);
+        console.log('Respuesta completa del login:', response);
+
         this.cookieService.set('auth_token', response.token);
+
+        if (response.id !== undefined && response.id !== null) {
+          localStorage.setItem('idUsuario', response.id.toString());
+          console.log('ID de usuario guardado en localStorage:', response.id);
+        }
+
         console.log('Token almacenado en la cookie:', response.token);
-      
       })
     );
   }
 
   logout(): void {
     this.cookieService.delete('auth_token');
+    localStorage.removeItem('idUsuario');
   }
 
   getToken(): string {
@@ -52,6 +59,11 @@ export class AuthService {
       console.error('Error al decodificar el token:', e);
       return [];
     }
+  }
+
+  getUserId(): number | null {
+    const idUsuario = localStorage.getItem('idUsuario');
+    return idUsuario ? parseInt(idUsuario, 10) : null;
   }
 
 }

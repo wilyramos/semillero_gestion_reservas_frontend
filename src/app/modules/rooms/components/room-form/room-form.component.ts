@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Sala } from '@core/models/sala.model';
 import { RoomsService } from '@modules/rooms/services/rooms.service';
 
 @Component({
@@ -10,15 +12,16 @@ import { RoomsService } from '@modules/rooms/services/rooms.service';
 })
 export class RoomFormComponent implements OnInit {
 
-roomForm: FormGroup;
+  roomForm: FormGroup;
   isEditMode: boolean = false;
   idSala?: number;
 
   constructor(
     private fb: FormBuilder,
     private roomsService: RoomsService,
-    private router: Router,
-    private route: ActivatedRoute
+    private snackBar: MatSnackBar,
+    private dialogRef: MatDialogRef<RoomFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data?: Sala
   ) {
     this.roomForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -27,13 +30,10 @@ roomForm: FormGroup;
   }
 
   ngOnInit(): void {
-    // Detectamos si hay un ID en la URL para saber si es edición
-    this.idSala = this.route.snapshot.params['id'];
-    if (this.idSala) {
+    if (this.data && this.data.idSala) {
       this.isEditMode = true;
-      this.roomsService.getRoomById(this.idSala).subscribe(data => {
-        this.roomForm.patchValue(data);
-      });
+      this.idSala = this.data.idSala;
+      this.roomForm.patchValue(this.data);
     }
   }
 
@@ -43,12 +43,42 @@ roomForm: FormGroup;
     const salaData = this.roomForm.value;
 
     if (this.isEditMode && this.idSala) {
-      this.roomsService.updateRoom(this.idSala, salaData).subscribe(() => {
-        this.router.navigate(['/admin/salas']);
+      this.roomsService.updateRoom(this.idSala, salaData).subscribe({
+        next: (response) => {
+          this.snackBar.open('Sala actualizada exitosamente', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+          this.dialogRef.close(response);
+        },
+        error: (error) => {
+          const errorMessage = error.error?.error || 'Error al actualizar la sala';
+          this.snackBar.open(errorMessage, 'Cerrar', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        }
       });
     } else {
-      this.roomsService.createRoom(salaData).subscribe(() => {
-        this.router.navigate(['/admin/salas']);
+      this.roomsService.createRoom(salaData).subscribe({
+        next: (response) => {
+          this.snackBar.open('Sala creada exitosamente', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+          this.dialogRef.close(response);
+        },
+        error: (error) => {
+          const errorMessage = error.error?.error || 'Error al crear la sala';
+          this.snackBar.open(errorMessage, 'Cerrar', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        }
       });
     }
   }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Reserva } from '@core/models/reserva.model';
+import { CrearReservaRequest, Reserva } from '@core/models/reserva.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,15 @@ import { Observable } from 'rxjs';
 export class ReservationsService {
 
 
-  private readonly apiUrl = 'http://localhost:8080/api/reservations';
+  private readonly apiUrl = 'http://localhost:8080/reservas';
+
+  crearReserva(reserva: CrearReservaRequest): Observable<Reserva> {
+      return this.http.post<Reserva>(`${this.apiUrl}/crear`, reserva);
+  }
+
+  cancelarReserva(id: number): Observable<Reserva> {
+      return this.http.post<Reserva>(`${this.apiUrl}/cancelar`, { id });
+  }
   private mockReservations: Reserva[] = [
     {
       idReserva: 1,
