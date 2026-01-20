@@ -1,3 +1,5 @@
+<h1 mat-dialog-title>Registrar Nueva Sala</h1>
+<div mat-dialog-content>
 <div class="form-container">
     <div class="form-card">
         <h3>{{ isEditMode ? 'Editar Sala' : 'Registrar Nueva Sala' }}</h3>
@@ -33,7 +35,7 @@
             </div>
 
             <div class="form-actions">
-                <button type="button" class="btn btn-secondary" routerLink="/admin/salas">
+                <button type="button" class="btn btn-secondary" mat-dialog-close>
                     Cancelar
                 </button>
                 <button type="submit" class="btn btn-success" [disabled]="roomForm.invalid">

@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Reserva } from '@core/models/reserva.model';
+import { ReservationFormComponent } from '@modules/reservations/components/reservation-form/reservation-form.component';
 import { ReservationsService } from '@modules/reservations/services/reservations.service';
 
 @Component({
   selector: 'app-reservations-page',
   templateUrl: './reservations-page.component.html',
-  styleUrls: ['./reservations-page.component.css']
+  styleUrls: ['./reservations-page.component.css'],
 })
 export class ReservationsPageComponent {
-
-reservations: Reserva[] = [];
+  reservations: Reserva[] = [];
   loading: boolean = false;
 
-  constructor(private reservationsService: ReservationsService) {}
+  constructor(
+    private reservationsService: ReservationsService,
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -25,7 +29,7 @@ reservations: Reserva[] = [];
         this.reservations = data;
         this.loading = false;
       },
-      error: () => this.loading = false
+      error: () => (this.loading = false),
     });
   }
 
@@ -35,5 +39,15 @@ reservations: Reserva[] = [];
         this.loadData(); // Recargamos la lista
       });
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReservationFormComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('Dialog closed:', result);
+    });
   }
 }

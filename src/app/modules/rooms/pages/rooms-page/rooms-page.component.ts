@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Sala } from '@core/models/sala.model';
+import { RoomFormComponent } from '@modules/rooms/components/room-form/room-form.component';
 import { RoomsService } from '@modules/rooms/services/rooms.service';
 
 @Component({
@@ -12,7 +14,9 @@ export class RoomsPageComponent {
 
   salas: Sala[] = [];
 
-  constructor(private roomsService: RoomsService) { }
+  constructor(private roomsService: RoomsService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.loadRooms();
@@ -27,5 +31,30 @@ export class RoomsPageComponent {
     if (confirm('¿Estás seguro de eliminar esta sala?')) {
       this.roomsService.deleteRoom(id).subscribe(() => this.loadRooms());
     }
+  }
+
+  openDialog(): void {
+      const dialogRef = this.dialog.open(RoomFormComponent, {
+        width: '600px'
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.loadRooms();
+        }
+      });
+    }
+
+  openEditDialog(sala: Sala): void {
+    const dialogRef = this.dialog.open(RoomFormComponent, {
+      width: '600px',
+      data: sala
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadRooms();
+      }
+    });
   }
 }
