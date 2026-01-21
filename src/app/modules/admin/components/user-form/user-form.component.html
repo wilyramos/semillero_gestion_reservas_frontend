@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Actualizar Usuario' : 'Registrar Nuevo Usuario' }}</h1>
+<div mat-dialog-content>
+    <p class="subtitle">
+        {{ isEditMode ? 'Modifique los datos del usuario seleccionado.' : 'Complete la información para el nuevo acceso.' }}
+    </p>
+
+    <form [formGroup]="userForm" (ngSubmit)="save()">
+        
+        <div class="form-group">
+            <label for="username">Nombre de Usuario</label>
+            <input id="username" type="text" formControlName="username" placeholder="Ej. jperez"
+                [class.input-error]="userForm.get('username')?.invalid && userForm.get('username')?.touched">
+            
+            <span class="error-text"
+                *ngIf="userForm.get('username')?.errors?.['required'] && userForm.get('username')?.touched">
+                El nombre de usuario es obligatorio.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña {{ isEditMode ? '(Opcional)' : '' }}</label>
+            <input id="password" type="password" formControlName="password" 
+                [placeholder]="isEditMode ? 'Dejar en blanco para no cambiar' : 'Mínimo 6 caracteres'"
+                [class.input-error]="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+
+            <span class="error-text"
+                *ngIf="userForm.get('password')?.errors?.['required'] && userForm.get('password')?.touched">
+                La contraseña es obligatoria para nuevos usuarios.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="roleIds">Asignar Roles</label>
+            <select id="roleIds" formControlName="roleIds" multiple
+                [class.input-error]="userForm.get('roleIds')?.invalid && userForm.get('roleIds')?.touched">
+                <option *ngFor="let rol of rolesList" [value]="rol.id">
+                    {{ rol.name }}
+                </option>
+            </select>
+            <p class="helper-text">Ctrl + Clic para selección múltiple.</p>
+            
+            <span class="error-text"
+                *ngIf="userForm.get('roleIds')?.errors?.['required'] && userForm.get('roleIds')?.touched">
+                Debe asignar al menos un rol.
+            </span>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary" mat-dialog-close>
+                Cancelar
+            </button>
+            <button type="submit" class="btn btn-success" [disabled]="userForm.invalid">
+                {{ isEditMode ? 'Actualizar' : 'Guardar' }} Usuario
+            </button>
+        </div>
+    </form>
+</div>
