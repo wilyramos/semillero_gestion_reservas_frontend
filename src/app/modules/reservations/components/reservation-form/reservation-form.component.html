@@ -1,23 +1,26 @@
 <h1 mat-dialog-title>Registrar Nueva Reserva</h1>
 <div mat-dialog-content>
-  <div class="form-container">
-    <div class="form-card">
-        <p class="subtitle">Complete la información técnica de la reserva.</p>
+    <p class="subtitle">Complete la información técnica de la reserva.</p>
 
-        <form [formGroup]="roomForm" (ngSubmit)="save()">
+    <form [formGroup]="roomForm" (ngSubmit)="save()">
             <div class="form-group">
                 <label for="idSala">Seleccionar Sala</label>
-                <input id="idSala" type="number" formControlName="idSala" placeholder="Id de Sala"
+                <select id="idSala" formControlName="idSala"
                     [class.input-error]="roomForm.get('idSala')?.invalid && roomForm.get('idSala')?.touched">
+                    <option [value]="null" disabled selected>Seleccione una sala</option>
+                    <option *ngFor="let sala of salas" [value]="sala.idSala">
+                        {{ sala.nombre }} (Capacidad: {{ sala.capacidad }})
+                    </option>
+                </select>
                 <span class="error-text"
                     *ngIf="roomForm.get('idSala')?.errors?.['required'] && roomForm.get('idSala')?.touched">
-                    El idSala es obligatorio.
+                    La sala es obligatoria.
                 </span>
             </div>
 
             <div class="form-group">
                 <label for="fechaInicio">Hora de Entrada</label>
-                <input id="fechaInicio" type="datetime-local" formControlName="fechaInicio" placeholder="Ej: Sala de Conferencias A"
+                <input id="fechaInicio" type="datetime-local" formControlName="fechaInicio"
                     [class.input-error]="roomForm.get('fechaInicio')?.invalid && roomForm.get('fechaInicio')?.touched">
 
                 <span class="error-text"
@@ -26,15 +29,18 @@
                 </span>
             </div>
 
-
             <div class="form-group">
                 <label for="fechaFin">Hora de Salida</label>
-                <input id="fechaFin" type="datetime-local" formControlName="fechaFin" placeholder="Ej: Sala de Conferencias A"
+                <input id="fechaFin" type="datetime-local" formControlName="fechaFin"
                     [class.input-error]="roomForm.get('fechaFin')?.invalid && roomForm.get('fechaFin')?.touched">
 
                 <span class="error-text"
                     *ngIf="roomForm.get('fechaFin')?.errors?.['required'] && roomForm.get('fechaFin')?.touched">
                     La hora de salida es obligatoria.
+                </span>
+                <span class="error-text"
+                    *ngIf="roomForm.get('fechaFin')?.errors?.['fechaInvalida'] && roomForm.get('fechaFin')?.touched">
+                    La fecha de salida debe ser mayor que la fecha de entrada.
                 </span>
             </div>
 
@@ -47,6 +53,4 @@
                 </button>
             </div>
         </form>
-    </div>
-</div>
 </div>

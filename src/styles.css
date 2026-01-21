@@ -108,5 +108,23 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+/* ===== Snackbar global ===== */
+.mdc-snackbar__surface {
+    background: white !important;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
+    color: #3f51b5 !important;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-button {
+    color: #3f51b5 !important;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-snack-bar-action {
+    color: #3f51b5 !important;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
