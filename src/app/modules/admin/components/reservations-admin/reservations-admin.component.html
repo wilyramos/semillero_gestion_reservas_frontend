@@ -1,74 +1,93 @@
 <div class="audit-container">
 
-  <!-- HEADER -->
   <header class="audit-header">
-    <h3 class="audit-title">Auditoría General de Reservas</h3>
 
-    <div class="audit-actions">
-      <select class="audit-select" (change)="onFilterStatus($event)">
-        <option value="">Todos los estados</option>
-        <option value="ACTIVA">Activas</option>
-        <option value="CANCELADA">Canceladas</option>
-      </select>
+    <div class="audit-actions-row">
+
+      <div class="filter-group">
+        <label>Desde:</label>
+        <input type="date" class="audit-input" [(ngModel)]="fechaDesde" (change)="onFilter()">
+      </div>
+
+      <div class="filter-group">
+        <label>Hasta:</label>
+        <input type="date" class="audit-input" [(ngModel)]="fechaHasta" (change)="onFilter()">
+      </div>
+
+      <div class="filter-group">
+        <label>Estado:</label>
+        <select class="audit-select" [(ngModel)]="estadoSelected" (change)="onFilter()">
+          <option value="">Todos los estados</option>
+          <option value="ACTIVA">Activas</option>
+          <option value="CANCELADA">Canceladas</option>
+        </select>
+      </div>
+
+      <button class="btn-reset" (click)="resetFilters()" title="Limpiar Filtros">
+        <i class="uil uil-refresh"></i>
+      </button>
+
     </div>
   </header>
 
-  <!-- TABLE CARD -->
   <div class="audit-card">
 
     <table class="audit-table">
       <thead>
         <tr>
-          <th (click)="onSort('idReserva')">ID <i class="uil uil-sort"></i></th>
-          <th (click)="onSort('username')">Usuario <i class="uil uil-sort"></i></th>
-          <th (click)="onSort('nombreSala')">Sala <i class="uil uil-sort"></i></th>
-          <th (click)="onSort('fechaInicio')">Inicio<i class="uil uil-sort"></i></th>
+          <th (click)="onSort('idReserva')" class="sortable-header">
+            ID <i [class]="getSortIcon('idReserva')"></i>
+          </th>
+          <th (click)="onSort('username')" class="sortable-header">
+            Usuario <i [class]="getSortIcon('username')"></i>
+          </th>
+          <th (click)="onSort('nombreSala')" class="sortable-header">
+            Sala <i [class]="getSortIcon('nombreSala')"></i>
+          </th>
+          <th (click)="onSort('fechaInicio')" class="sortable-header">
+            Inicio <i [class]="getSortIcon('fechaInicio')"></i>
+          </th>
           <th>Estado</th>
+          <th class="text-center">Acciones</th>
         </tr>
       </thead>
 
       <tbody>
         <tr *ngFor="let r of reservas">
           <td class="cell-id">#{{ r.idReserva }}</td>
-          <td>{{ r.username }}</td>
+          <td class="fw-medium">{{ r.username }}</td>
           <td>{{ r.nombreSala }}</td>
           <td>{{ r.fechaInicio | date:'dd/MM/yyyy HH:mm' }}</td>
           <td>
-            <span class="status-badge"
-                  [class.active]="r.estado === 'ACTIVA'"
-                  [class.cancelled]="r.estado !== 'ACTIVA'">
+            <span class="status-badge" [class.active]="r.estado === 'ACTIVA'" [class.cancelled]="r.estado !== 'ACTIVA'">
               {{ r.estado }}
             </span>
+          </td>
+          <td class="text-center">
+            <button *ngIf="r.estado === 'ACTIVA'" class="btn-cancel" (click)="onCancelReserva(r)"
+              title="Cancelar Reserva">
+              <i class="uil uil-times-circle"> Cancelar</i>
+            </button>
+            <span *ngIf="r.estado !== 'ACTIVA'" class="text-muted small">--</span>
+          </td>
+        </tr>
+
+        <tr *ngIf="reservas.length === 0">
+          <td colspan="6" class="text-center py-4 text-muted">
+            No se encontraron registros.
           </td>
         </tr>
       </tbody>
     </table>
 
-    <!-- FOOTER -->
     <footer class="audit-footer">
       <span class="audit-info">
         Mostrando {{ reservas.length }} de {{ totalElements }} registros
       </span>
 
-      <div class="pagination">
-        <button
-          class="page-btn"
-          [disabled]="params.pageNumber === 0"
-          (click)="goToPage(params.pageNumber - 1)">
-          Anterior
-        </button>
-
-        <span class="page-info">
-          Página {{ params.pageNumber + 1 }} de {{ totalPages }}
-        </span>
-
-        <button
-          class="page-btn"
-          [disabled]="params.pageNumber === totalPages - 1"
-          (click)="goToPage(params.pageNumber + 1)">
-          Siguiente
-        </button>
-      </div>
+      <mat-paginator [length]="totalElements" [pageSize]="params.rowsPerPage" [pageIndex]="params.pageNumber"
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="handlePageEvent($event)" aria-label="Seleccionar página">
+      </mat-paginator>
     </footer>
 
   </div>

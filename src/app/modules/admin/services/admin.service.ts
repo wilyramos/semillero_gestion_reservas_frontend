@@ -4,6 +4,7 @@ import { PageResponse, PaginationModel } from '@core/models/pagination.model';
 import { Reserva } from '@core/models/reserva.model';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UsuarioResponse } from '@core/models/usuario.model';
 
 export interface DashboardStats {
   totalReservasHoy: number;
@@ -27,4 +28,9 @@ export class AdminService {
   getReservasPage(params: PaginationModel): Observable<PageResponse<Reserva>> {
     return this.http.post<PageResponse<Reserva>>(`${this.apiUrl}/reservas/paginado`, params);
   }
+
+  getUsuariosPage(params: PaginationModel): Observable<PageResponse<UsuarioResponse>> {
+    return this.http.post<PageResponse<UsuarioResponse>>(`${this.apiUrl}/usuarios/paginado`, params);
+  }
+
 }

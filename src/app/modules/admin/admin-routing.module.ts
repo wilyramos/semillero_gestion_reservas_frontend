@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ReservationsAdminComponent } from './components/reservations-admin/reservations-admin.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
 
 const routes: Routes = [
   {
@@ -23,13 +24,11 @@ const routes: Routes = [
           import('../rooms/rooms.module')
             .then(m => m.RoomsModule)
       },
-      // {
-      //   path: 'usuarios',
-      //   loadChildren: () =>
-      //     import('./pages/user-management/user-management.module')
-      //       .then(m => m.UserManagementModule)
-      // },
-      // // Ruta para auditoría general de todas las reservas
+      {
+        path: 'usuarios',
+        component: UserManagementComponent
+      },
+      // Ruta para auditoría general de todas las reservas
       {
         path: 'todas-las-reservas',
         component: ReservationsAdminComponent

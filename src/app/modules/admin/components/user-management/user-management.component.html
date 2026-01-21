@@ -1,1 +1,65 @@
-<p>user-management works!</p>
+<div class="audit-container">
+    <header class="audit-header">
+        <div class="header-info">
+            <p class="audit-subtitle">Administre las cuentas de usuario y sus permisos</p>
+        </div>
+        <div class="header-actions">
+            <button mat-raised-button color="primary" (click)="openUserForm()">
+                <i class="uil uil-plus me-1"></i> Nuevo Usuario
+            </button>
+        </div>
+    </header>
+
+    <div class="audit-card">
+        <div class="table-responsive">
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th (click)="onSort('idUsuario')" class="sortable-header">
+                            ID <i [class]="getSortIcon('idUsuario')"></i>
+                        </th>
+                        <th (click)="onSort('username')" class="sortable-header">
+                            Username <i [class]="getSortIcon('username')"></i>
+                        </th>
+                        <th>Roles asignados</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let u of usuarios">
+                        <td class="cell-id">#{{ u.idUsuario }}</td>
+                        <td class="fw-bold">{{ u.username }}</td>
+                        <td>
+                            <div class="role-list">
+                                <span *ngFor="let rol of u.roleNames" class="role-badge"
+                                    [class.admin]="rol === 'ROLE_ADMIN'">
+                                    {{ rol }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn-icon" title="Editar usuario" (click)="openUserForm(u)">
+                                <i class="uil uil-edit text-primary"></i>
+                            </button>
+                            <button class="btn-icon" title="Eliminar usuario" (click)="onDeleteUser(u)">
+                                <i class="uil uil-trash-alt text-danger"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="usuarios.length === 0">
+                        <td colspan="4" class="empty-message">No hay usuarios registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="audit-footer">
+            <span class="audit-info">Mostrando {{ usuarios.length }} de {{ totalElements }} usuarios</span>
+            <mat-paginator [length]="totalElements" [pageSize]="params.rowsPerPage" [pageIndex]="params.pageNumber"
+                [pageSizeOptions]="[5, 10, 25]" (page)="handlePageEvent($event)" aria-label="Seleccionar página">
+            </mat-paginator>
+        </footer>
+    </div>
+</div>

@@ -1,10 +1,45 @@
-.audit-footer{
+.audit-actions-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
 }
 
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
-.pagination {
-    
+.filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.audit-input, .audit-select {
+    padding: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+.btn-reset {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.btn-reset:hover {
+    background: #f1f5f9;
+    color: #2563eb;
 }

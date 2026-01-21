@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
     SidebarComponent,
     HeaderUserComponent,
     CardInfoComponent,
-    SkeletonComponent
+    SkeletonComponent,
+    
     
   ],
   imports: [
