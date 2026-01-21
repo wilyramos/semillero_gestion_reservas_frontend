@@ -13,13 +13,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     HeaderUserComponent,
     CardInfoComponent,
-    SkeletonComponent,
+    SkeletonComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatDialogModule,
     MatButtonModule,
+    
   ],
   providers: [
     {
@@ -38,4 +41,4 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

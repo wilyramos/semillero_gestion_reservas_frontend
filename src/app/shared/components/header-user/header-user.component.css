@@ -10,7 +10,6 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #e5e7eb;
 }
 
 /* IZQUIERDA - breadcrumb */
@@ -18,12 +17,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #6b7280;
   font-size: 0.9rem;
 }
 
 .breadcrumb i {
-  font-size: 1.1rem;
+  font-size: .8rem;
   color: #2563eb;
 }
 
