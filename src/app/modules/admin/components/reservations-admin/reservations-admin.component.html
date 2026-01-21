@@ -1,0 +1,75 @@
+<div class="audit-container">
+
+  <!-- HEADER -->
+  <header class="audit-header">
+    <h3 class="audit-title">Auditoría General de Reservas</h3>
+
+    <div class="audit-actions">
+      <select class="audit-select" (change)="onFilterStatus($event)">
+        <option value="">Todos los estados</option>
+        <option value="ACTIVA">Activas</option>
+        <option value="CANCELADA">Canceladas</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- TABLE CARD -->
+  <div class="audit-card">
+
+    <table class="audit-table">
+      <thead>
+        <tr>
+          <th (click)="onSort('idReserva')">ID <i class="uil uil-sort"></i></th>
+          <th (click)="onSort('username')">Usuario <i class="uil uil-sort"></i></th>
+          <th (click)="onSort('nombreSala')">Sala <i class="uil uil-sort"></i></th>
+          <th (click)="onSort('fechaInicio')">Inicio<i class="uil uil-sort"></i></th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let r of reservas">
+          <td class="cell-id">#{{ r.idReserva }}</td>
+          <td>{{ r.username }}</td>
+          <td>{{ r.nombreSala }}</td>
+          <td>{{ r.fechaInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            <span class="status-badge"
+                  [class.active]="r.estado === 'ACTIVA'"
+                  [class.cancelled]="r.estado !== 'ACTIVA'">
+              {{ r.estado }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- FOOTER -->
+    <footer class="audit-footer">
+      <span class="audit-info">
+        Mostrando {{ reservas.length }} de {{ totalElements }} registros
+      </span>
+
+      <div class="pagination">
+        <button
+          class="page-btn"
+          [disabled]="params.pageNumber === 0"
+          (click)="goToPage(params.pageNumber - 1)">
+          Anterior
+        </button>
+
+        <span class="page-info">
+          Página {{ params.pageNumber + 1 }} de {{ totalPages }}
+        </span>
+
+        <button
+          class="page-btn"
+          [disabled]="params.pageNumber === totalPages - 1"
+          (click)="goToPage(params.pageNumber + 1)">
+          Siguiente
+        </button>
+      </div>
+    </footer>
+
+  </div>
+</div>
