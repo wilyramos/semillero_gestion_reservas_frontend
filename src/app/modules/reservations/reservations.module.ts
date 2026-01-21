@@ -7,6 +7,8 @@ import { ReservationFormComponent } from './components/reservation-form/reservat
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
 })
 export class ReservationsModule {}

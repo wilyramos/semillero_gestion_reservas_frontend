@@ -1,39 +1,70 @@
-<div class="container">
-  <div class="header-section">
-    <h2>Mis Reservas</h2>
-    <button mat-button (click)="openDialog()">+ Nueva Reserva</button>
-  </div>
+<div class="header-section">
+  <h2>Mis Reservas</h2>
+  <button mat-button (click)="openDialog()">+ Nueva Reserva</button>
+</div>
+<br>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
 
-  <div class="table-container mt-4">
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th>Sala</th>
-          <th>Inicio</th>
-          <th>Fin</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let res of reservations">
-          <td>Sala {{ res.nombreSala }}</td>
-          <td>{{ res.fechaInicio | date:'short' }}</td>
-          <td>{{ res.fechaFin | date:'short' }}</td>
-          <td>
-            <span class="status-badge" [ngClass]="res.estado.toLowerCase()">
-              {{ res.estado }}
-            </span>
-          </td>
-          <td>
-            <button *ngIf="res.estado === 'ACTIVA'"
-                    class="btn btn-danger"
-                    (click)="onCancel(res.idReserva)">
-              Cancelar
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- ID Column -->
+    <ng-container matColumnDef="idReserva">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let reserva"> {{reserva.idReserva}} </td>
+    </ng-container>
+
+    <!-- Sala Column -->
+    <ng-container matColumnDef="nombreSala">
+      <th mat-header-cell *matHeaderCellDef> Sala </th>
+      <td mat-cell *matCellDef="let reserva"> {{reserva.nombreSala}} </td>
+    </ng-container>
+
+    <!-- Usuario Column -->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef> Usuario </th>
+      <td mat-cell *matCellDef="let reserva"> {{reserva.username}} </td>
+    </ng-container>
+
+    <!-- Fecha Inicio Column -->
+    <ng-container matColumnDef="fechaInicio">
+      <th mat-header-cell *matHeaderCellDef> Inicio </th>
+      <td mat-cell *matCellDef="let reserva"> {{reserva.fechaInicio | date:'short'}} </td>
+    </ng-container>
+
+    <!-- Fecha Fin Column -->
+    <ng-container matColumnDef="fechaFin">
+      <th mat-header-cell *matHeaderCellDef> Fin </th>
+      <td mat-cell *matCellDef="let reserva"> {{reserva.fechaFin | date:'short'}} </td>
+    </ng-container>
+
+    <!-- Estado Column -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let reserva">
+        <span class="status-badge" [ngClass]="reserva.estado.toLowerCase()">
+          {{ reserva.estado }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Acciones Column -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let reserva">
+        <button *ngIf="reserva.estado === 'ACTIVA'"
+                mat-raised-button
+                color="warn"
+                (click)="onCancel(reserva.idReserva)">
+          Cancelar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Selecciona página de reservas">
+  </mat-paginator>
 </div>
