@@ -16,7 +16,7 @@ export class ReservationsPageComponent {
   constructor(
     private reservationsService: ReservationsService,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -35,9 +35,15 @@ export class ReservationsPageComponent {
 
   onCancel(id: number): void {
     if (confirm('¿Está seguro de que desea cancelar esta reserva?')) {
-      this.reservationsService.cancelReservation(id).subscribe(() => {
-        this.loadData(); // Recargamos la lista
-      });
+      this.reservationsService
+        .cancelarReserva({ idReserva: id, motivo: 'Cancelada desde UI' })
+        .subscribe({
+          next: () => {
+            this.reservations = this.reservations.filter(
+              (res) => res.idReserva !== id
+            );
+          },
+        });
     }
   }
 

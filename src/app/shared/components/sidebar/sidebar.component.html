@@ -6,20 +6,23 @@
         </div>
     </div>
 
-    <ul class="nav-list">
-        <li *ngFor="let item of mainMenu.defaultOptions">
-            <a [routerLink]="item.router" routerLinkActive="active">
-                <i [class]="item.icon"></i>
-                <span class="links_name">{{ item.name }}</span>
-            </a>
-        </li>
-    </ul>
+    <div class="menu-section">
+        <p class="section-title">PRINCIPAL</p>
+        <ul class="nav-list">
+            <li *ngFor="let item of userMenu">
+                <a [routerLink]="item.router" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <i [class]="item.icon"></i>
+                    <span class="links_name">{{ item.name }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-    <div *ngIf="mainMenu.accessLink.length > 0">
+    <div class="menu-section" *ngIf="adminMenu.length > 0">
         <div class="separator"></div>
         <p class="section-title">ADMINISTRACIÓN</p>
         <ul class="nav-list">
-            <li *ngFor="let item of mainMenu.accessLink">
+            <li *ngFor="let item of adminMenu">
                 <a [routerLink]="item.router" routerLinkActive="active">
                     <i [class]="item.icon"></i>
                     <span class="links_name">{{ item.name }}</span>

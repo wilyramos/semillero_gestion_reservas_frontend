@@ -4,25 +4,97 @@
   width: 100%;
 }
 
-/* CONTENIDO */
+/* CONTENIDO HEADER */
 .header-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-/* IZQUIERDA */
+/* IZQUIERDA - breadcrumb */
 .breadcrumb {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #9ca3af;
+  color: #6b7280;
+  font-size: 0.9rem;
 }
 
-/* DERECHA */
+.breadcrumb i {
+  font-size: 1.1rem;
+  color: #2563eb;
+}
+
+.page-name {
+  font-weight: 500;
+}
+
+/* DERECHA - user pill */
 .user-pill {
-  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 12px;
+  }
+
+/* Nombre */
+.user-pill .name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #111827;
+}
+
+/* Rol */
+.user-pill .role {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background-color: #e0e7ff;
+  color: #1e3a8a;
+  text-transform: uppercase;
+}
+
+/* Avatar */
+.user-pill .avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Fecha */
+.user-pill .date {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Logout */
+.user-pill .logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ef4444;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.user-pill .logout:hover {
+  color: #dc2626;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .page-name,
+  .user-pill .date,
+  .user-pill .role {
+    display: none;
+  }
 }

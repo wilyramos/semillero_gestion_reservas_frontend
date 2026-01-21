@@ -5,10 +5,16 @@
     </div>
 
     <div class="user-pill">
-        <span class="name">Juan Perez</span>
-        <div class="avatar">A</div>
+        <span class="name">{{ username }}</span>
+
+        <div class="avatar">{{ username.charAt(0) }}</div>
+        <span class="date">{{ today | date:'dd/MM/yyyy' }}</span>
+
         <button class="logout" (click)="logout()">
-            <i class="uil uil-sign-out-alt"></i>
+            <i class="uil uil-sign-out-alt">
+                
+            </i>
+            Salir
         </button>
     </div>
 </div>

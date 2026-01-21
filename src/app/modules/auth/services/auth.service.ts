@@ -66,4 +66,24 @@ export class AuthService {
     return idUsuario ? parseInt(idUsuario, 10) : null;
   }
 
+  getUsername(): string {
+    const token = this.getToken();
+    if (!token) return '';
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub || ''; // En JWT estándar 'sub' es el username
+    } catch (e) {
+      return '';
+    }
+  }
+
+  hasRole(role: string): boolean {
+    return this.getRoles().includes(role);
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
+  }
+
+
 }

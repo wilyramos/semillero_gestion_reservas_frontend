@@ -17,7 +17,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let res of reservations">
-          <td>Sala {{ res.idSala }}</td>
+          <td>Sala {{ res.nombreSala }}</td>
           <td>{{ res.fechaInicio | date:'short' }}</td>
           <td>{{ res.fechaFin | date:'short' }}</td>
           <td>

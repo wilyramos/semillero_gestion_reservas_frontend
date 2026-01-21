@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@modules/auth/services/auth.service';
 
 @Component({
   selector: 'app-header-user',
@@ -7,17 +8,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-user.component.css']
 })
 export class HeaderUserComponent implements OnInit {
-  user: any = { username: 'Admin', role: 'ADMIN' }; // Mocked user data
-  today: number = Date.now();
 
-  constructor(private router: Router) {}
+  username: string = '';
+  role: string = '';
+  today: number = Date.now();
+  isAuthenticated = false;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    // daots del usuario del authservice
+    this.isAuthenticated = this.authService.isAuthenticated();
+
+    if (this.isAuthenticated) {
+      this.username = this.authService.getUsername();
+      this.role = this.authService.getRoles()[0] ?? '';
+    }
   }
 
   logout(): void {
-    // usar authservice
-
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

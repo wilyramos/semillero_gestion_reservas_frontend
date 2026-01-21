@@ -20,7 +20,8 @@ export const adminGuard: CanActivateFn = (route, state) => {
 
     const roles: string[] = decoded.roles || [];
 
-    if (!roles.includes('ADMIN')) {
+    //INLUCDE ROLE_ADMIN AND ADMIN
+    if (!roles.includes('ROLE_ADMIN') && !roles.includes('ADMIN')) {
       router.navigate(['/reservas']); // acceso denegado
       return false;
     }

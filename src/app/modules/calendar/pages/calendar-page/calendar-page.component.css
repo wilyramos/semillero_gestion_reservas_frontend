@@ -1,0 +1,17 @@
+.container {
+  max-width: 100%;
+}
+
+.card {
+  height: calc(100vh - 160px); /* ajusta según tu header/navbar */
+  overflow: hidden;
+}
+
+.calendar-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+::ng-deep full-calendar {
+  height: 100%;
+}
