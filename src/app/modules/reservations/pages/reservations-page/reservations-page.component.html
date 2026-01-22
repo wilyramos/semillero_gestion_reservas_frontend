@@ -4,67 +4,63 @@
 </div>
 <br>
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
+  <table class="audit-table">
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="idReserva">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let reserva"> {{reserva.idReserva}} </td>
-    </ng-container>
+    <thead>
+      <tr>
+        <th (click)="onSort('idReserva')" class="sortable-header">
+          ID <i [class]="getSortIcon('idReserva')"></i>
+        </th>
+        <th (click)="onSort('nombreSala')" class="sortable-header">
+          Sala <i [class]="getSortIcon('nombreSala')"></i>
+        </th>
+        <th (click)="onSort('fechaInicio')" class="sortable-header">
+          Inicio <i [class]="getSortIcon('fechaInicio')"></i>
+        </th>
+        <th (click)="onSort('fechaFin')" class="sortable-header">
+          Fin <i [class]="getSortIcon('fechaFin')"></i>
+        </th>
+        <th>Estado</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
 
-    <!-- Sala Column -->
-    <ng-container matColumnDef="nombreSala">
-      <th mat-header-cell *matHeaderCellDef> Sala </th>
-      <td mat-cell *matCellDef="let reserva"> {{reserva.nombreSala}} </td>
-    </ng-container>
+    <tbody>
+      <tr *ngFor="let r of reservas">
+        <td class="cell-id">#{{ r.idReserva }}</td>
+        <td>{{ r.nombreSala }}</td>
+        <td>{{ r.fechaInicio | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ r.fechaFin | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td>
+          <span class="status-badge" [class.active]="r.estado === 'ACTIVA'" [class.cancelled]="r.estado !== 'ACTIVA'">
+            {{ r.estado }}
+          </span>
+        </td>
+        <td class="text-center">
+          <button *ngIf="r.estado === 'ACTIVA'" class="btn-cancel" (click)="onCancel(r)"
+            title="Cancelar Reserva">
+            <i class="uil uil-times-circle"> Cancelar</i>
+          </button>
+          <span *ngIf="r.estado !== 'ACTIVA'" class="text-muted small">--</span>
+        </td>
+      </tr>
 
-    <!-- Usuario Column -->
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef> Usuario </th>
-      <td mat-cell *matCellDef="let reserva"> {{reserva.username}} </td>
-    </ng-container>
-
-    <!-- Fecha Inicio Column -->
-    <ng-container matColumnDef="fechaInicio">
-      <th mat-header-cell *matHeaderCellDef> Inicio </th>
-      <td mat-cell *matCellDef="let reserva"> {{reserva.fechaInicio | date:'short'}} </td>
-    </ng-container>
-
-    <!-- Fecha Fin Column -->
-    <ng-container matColumnDef="fechaFin">
-      <th mat-header-cell *matHeaderCellDef> Fin </th>
-      <td mat-cell *matCellDef="let reserva"> {{reserva.fechaFin | date:'short'}} </td>
-    </ng-container>
-
-    <!-- Estado Column -->
-    <ng-container matColumnDef="estado">
-      <th mat-header-cell *matHeaderCellDef> Estado </th>
-      <td mat-cell *matCellDef="let reserva">
-        <span class="status-badge" [ngClass]="reserva.estado.toLowerCase()">
-          {{ reserva.estado }}
-        </span>
-      </td>
-    </ng-container>
-
-    <!-- Acciones Column -->
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef> Acciones </th>
-      <td mat-cell *matCellDef="let reserva">
-        <button *ngIf="reserva.estado === 'ACTIVA'"
-                mat-raised-button
-                color="warn"
-                (click)="onCancel(reserva.idReserva)">
-          Cancelar
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr *ngIf="reservas.length === 0">
+        <td colspan="6" class="text-center py-4 text-muted">
+          No se encontraron registros.
+        </td>
+      </tr>
+    </tbody>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
-                 showFirstLastButtons
-                 aria-label="Selecciona página de reservas">
-  </mat-paginator>
+  <footer class="audit-footer">
+    <span class="audit-info">
+      Mostrando {{ reservas.length }} de {{ totalElements }} registros
+    </span>
+
+    <mat-paginator [length]="totalElements" [pageSize]="params.rowsPerPage" [pageIndex]="params.pageNumber"
+      [pageSizeOptions]="[5, 10, 25, 50]" (page)="handlePageEvent($event)" aria-label="Seleccionar página">
+    </mat-paginator>
+  </footer>
+
 </div>

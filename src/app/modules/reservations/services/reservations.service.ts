@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CrearReservaRequest, Reserva, CancelarReservaRequest } from '@core/models/reserva.model';
 import { environment } from 'src/environments/environment';
+import { PaginationModel } from '@core/models/pagination.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,9 @@ export class ReservationsService {
       .set('fin', fin);
 
     return this.http.get<Reserva[]>(`${this.apiUrl}/buscar`, { params });
+  }
+
+  getReservasPageByUser(username: string, pagination: PaginationModel): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/paginado/${username}`, pagination);
   }
 }
