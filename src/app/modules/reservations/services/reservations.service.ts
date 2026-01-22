@@ -37,10 +37,13 @@ export class ReservationsService {
   }
 
 
-  searchByDates(inicio: string, fin: string): Observable<Reserva[]> {
-    const params = new HttpParams()
+  searchByDates(inicio: string, fin: string, idSala?: number): Observable<Reserva[]> {
+    let params = new HttpParams()
       .set('inicio', inicio)
       .set('fin', fin);
+    if (idSala) {
+      params = params.set('idSala', idSala.toString());
+    }
 
     return this.http.get<Reserva[]>(`${this.apiUrl}/buscar`, { params });
   }

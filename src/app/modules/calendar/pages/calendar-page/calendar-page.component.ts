@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { ReservationsService } from '@modules/reservations/services/reservations.service';
+import { RoomsService } from '@modules/rooms/services/rooms.service'; // Asegura esta ruta
+import { Sala } from '@core/models/sala.model';
 import { CalendarOptions, EventClickArg, DateSelectArg, DatesSetArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -16,6 +18,13 @@ export class CalendarPageComponent implements OnInit {
 
   private currentUsername: string = '';
 
+  // Variables para el filtro de salas
+  salas: Sala[] = [];
+  selectedSalaId: number | null = null;
+
+  private lastInicio: string = '';
+  private lastFin: string = '';
+
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -30,37 +39,50 @@ export class CalendarPageComponent implements OnInit {
     allDaySlot: false,
     nowIndicator: true,
     selectable: true,
-    
-    // CALLBACK CLAVE: Se ejecuta al cambiar de mes/semana/día
+    height: 'auto',
+
     datesSet: this.handleDatesSet.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    select: this.handleDateSelect.bind(this),
     events: []
   };
 
   constructor(
     private reservationService: ReservationsService,
+    private roomsService: RoomsService, // Inyectamos RoomsService
     private authService: AuthService
-  ) { 
-    this.currentUsername = this.authService.getUsername(); 
+  ) {
+    this.currentUsername = this.authService.getUsername();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.loadRooms();
+  }
+
+  loadRooms(): void {
+    this.roomsService.getRooms().subscribe({
+      next: (data) => this.salas = data,
+      error: (err) => console.error('Error cargando salas:', err)
+    });
+  }
 
   /**
-   * Se dispara automáticamente cuando el rango de fechas del calendario cambia.
+   * Se dispara al cambiar la sala en el select
    */
-  handleDatesSet(dateInfo: DatesSetArg): void {
-    const inicio = this.formatDate(dateInfo.start);
-    const fin = this.formatDate(dateInfo.end);
+  onSalaChange(): void {
+    // Si ya tenemos un rango de fechas cargado, refrescamos
+    if (this.lastInicio && this.lastFin) {
+      this.fetchReservations(this.lastInicio, this.lastFin);
+    }
+  }
 
-    console.log(`Cargando rango: ${inicio} - ${fin}`);
-    this.fetchReservations(inicio, fin);
+  handleDatesSet(dateInfo: DatesSetArg): void {
+    this.lastInicio = this.formatDate(dateInfo.start);
+    this.lastFin = this.formatDate(dateInfo.end);
+    this.fetchReservations(this.lastInicio, this.lastFin);
   }
 
   fetchReservations(inicio: string, fin: string): void {
-    // Usamos searchByDates en lugar de getCalendarData
-    this.reservationService.searchByDates(inicio, fin).subscribe({
+    // Pasamos el idSala al servicio (si es null, el servicio no lo enviará)
+    this.reservationService.searchByDates(inicio, fin, this.selectedSalaId || undefined).subscribe({
       next: (reservations) => {
         const eventData = reservations.map(res => {
           const isMine = res.username === this.currentUsername;
@@ -81,31 +103,19 @@ export class CalendarPageComponent implements OnInit {
           };
         });
 
-        this.calendarOptions.events = eventData;
+        // RE-ASIGNAR EL OBJETO COMPLETO para forzar el renderizado
+        this.calendarOptions = {
+          ...this.calendarOptions,
+          events: eventData
+        };
       },
-      error: (err) => console.error('Error al filtrar por fechas:', err)
+      error: (err) => console.error('Error al filtrar:', err)
     });
   }
 
-  /**
-   * Utilidad para formatear Date a "dd-MM-yyyy HH:mm:ss"
-   */
   private formatDate(date: Date): string {
     const pad = (n: number) => n < 10 ? '0' + n : n;
     return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()} ` +
-           `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-  }
-
-  handleEventClick(clickInfo: EventClickArg): void {
-    const isMine = clickInfo.event.extendedProps['isMine'];
-    if (isMine || this.authService.hasRole('ROLE_ADMIN')) {
-      // Lógica de edición/cancelación
-    } else {
-      alert('Solo lectura: Reserva de otro usuario.');
-    }
-  }
-
-  handleDateSelect(selectInfo: DateSelectArg): void {
-    // Lógica para abrir modal de creación
+      `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
   }
 }

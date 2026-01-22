@@ -1,9 +1,20 @@
-<div class="container">
-  <div class="header-section">
+<div class="container mt-4">
+  <div class="header-section d-flex justify-content-between align-items-center mb-3">
+    <h2 class="m-0 fw-bold text-dark">Calendario de Reservas</h2>
+    
+    <div class="d-flex align-items-center gap-2" style="min-width: 300px;">
+      <i class="uil uil-filter text-primary fs-4">Filtro por salas</i>
+      <select class="form-select" [(ngModel)]="selectedSalaId" (change)="onSalaChange()">
+        <option [value]="null">--- Todas las Salas ---</option>
+        <option *ngFor="let sala of salas" [value]="sala.idSala">
+          {{ sala.nombre }} (Cap: {{ sala.capacidad }})
+        </option>
+      </select>
+    </div>
   </div>
 
-  <div class="card shadow mt-4">
-    <div class="calendar-wrapper">
+  <div class="card shadow border-0 overflow-hidden">
+    <div class="calendar-wrapper p-3 bg-white">
       <full-calendar [options]="calendarOptions"></full-calendar>
     </div>
   </div>
