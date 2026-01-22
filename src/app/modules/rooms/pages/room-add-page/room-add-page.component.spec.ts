@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RoomAddPageComponent } from './room-add-page.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RoomAddPageComponent', () => {
   let component: RoomAddPageComponent;
   let fixture: ComponentFixture<RoomAddPageComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [RoomAddPageComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [RoomAddPageComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(RoomAddPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

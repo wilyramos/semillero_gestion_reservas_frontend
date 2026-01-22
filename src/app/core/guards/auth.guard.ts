@@ -21,17 +21,14 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   const token = cookieService.get('auth_token');
 
-  // 1. No hay token
   if (!token) {
     router.navigate(['/login']);
     return false;
   }
 
   try {
-    // 2. Decodificar token
     const decoded: any = jwtDecode(token);
 
-    // 3. Verificar expiración
     const now = Math.floor(Date.now() / 1000);
     if (decoded.exp < now) {
       cookieService.delete('auth_token');

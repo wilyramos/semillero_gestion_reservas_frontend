@@ -16,14 +16,14 @@ export class HeaderUserComponent implements OnInit {
   isAuthenticated = false;
   pageName: string = 'Dashboard';
 
-  // Diccionario para mapear URLs a nombres legibles
+  // Diccionario de rutas y sus títulos correspondientes
   private readonly routeTitles: { [key: string]: string } = {
     '/admin/dashboard': 'Panel Principal',
     '/admin/todas-las-reservas': 'Auditoría de Reservas',
     '/admin/usuarios': 'Gestión de Usuarios',
     '/admin/salas': 'Gestión de Salas',
     '/reservas': 'Mis Reservas',
-    '/calendario': 'Calendario',
+    '/calendario': 'Calendario de Reservas',
 
   };
 

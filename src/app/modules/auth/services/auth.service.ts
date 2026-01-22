@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, tap } from 'rxjs';
-import { AuthRequest, AuthResponse } from '@core/models/auth.model';
+import { AuthResponse } from '@core/models/auth.model';
 
 
 @Injectable({

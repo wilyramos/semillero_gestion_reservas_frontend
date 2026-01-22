@@ -17,6 +17,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ReservationsAdminComponent } from './components/reservations-admin/reservations-admin.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { NgChartsModule } from 'ng2-charts';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { NgChartsModule } from 'ng2-charts';
     UserManagementComponent,
     DashboardComponent,
     ReservationsAdminComponent,
-    UserFormComponent // <--- 1. DECLARAR AQUÍ
+    UserFormComponent
   ],
   imports: [
     CommonModule,
@@ -33,13 +34,13 @@ import { NgChartsModule } from 'ng2-charts';
     MatPaginatorModule,
     ReactiveFormsModule,
     FormsModule,
-    // 2. AGREGAR MÓDULOS DE MATERIAL
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

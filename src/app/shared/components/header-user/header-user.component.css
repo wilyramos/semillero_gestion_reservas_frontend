@@ -12,87 +12,104 @@
   width: 100%;
 }
 
-/* IZQUIERDA - breadcrumb */
-.breadcrumb {
+
+/* ========================
+   HEADER
+======================== */
+.header-content {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
+  width: 100%;
+  background: #ffffff;
+}
+
+/* ========================
+   BREADCRUMB centrado todo su contenido
+======================== */
+.breadcrumb {
+  display: flex;
+  align-items: baseline; /* 🔑 clave */
+  gap: 0.4rem;
+  color: #004254;
+  font-size: 0.85rem;
 }
 
 .breadcrumb i {
-  font-size: .8rem;
-  color: #2563eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
 .page-name {
+  margin: 0;
   font-weight: 500;
+  line-height: 1.2;
 }
 
-/* DERECHA - user pill */
+/* ========================
+   USER PILL
+======================== */
 .user-pill {
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 12px;
-  }
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
 
-/* Nombre */
+/* ========================
+   USER INFO
+======================== */
 .user-pill .name {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #111827;
+  font-weight: 500;
+  color: #0f172a;
 }
 
-/* Rol */
-.user-pill .role {
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 6px;
-  background-color: #e0e7ff;
-  color: #1e3a8a;
-  text-transform: uppercase;
+.user-pill .date {
+  color: #64748b;
+  font-size: 0.75rem;
 }
 
-/* Avatar */
-.user-pill .avatar {
+/* ========================
+   AVATAR
+======================== */
+.avatar {
   width: 32px;
   height: 32px;
-  background-color: #2563eb;
-  color: #ffffff;
   border-radius: 50%;
+  background: #004254;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.8rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  text-transform: uppercase;
 }
 
-/* Fecha */
-.user-pill .date {
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-/* Logout */
-.user-pill .logout {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #ef4444;
-  font-size: 1.1rem;
+/* ========================
+   LOGOUT
+======================== */
+.logout {
   display: flex;
   align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #004254;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.user-pill .logout:hover {
-  color: #dc2626;
+.logout i {
+  font-size: 1rem;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .page-name,
-  .user-pill .date,
-  .user-pill .role {
-    display: none;
-  }
+.logout:hover {
+  background: #e6f2f4;
 }

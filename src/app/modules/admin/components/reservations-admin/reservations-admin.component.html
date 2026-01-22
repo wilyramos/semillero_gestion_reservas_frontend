@@ -53,7 +53,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let r of reservas">
+        <tr *ngFor="let r of reservas" [appHighlightRow]="'#eff6ff'">
           <td class="cell-id">#{{ r.idReserva }}</td>
           <td class="fw-medium">{{ r.username }}</td>
           <td>{{ r.nombreSala }}</td>
@@ -63,7 +63,7 @@
               {{ r.estado }}
             </span>
           </td>
-          <td class="text-center">
+          <td class="text-center" [ngClass]="">
             <button *ngIf="r.estado === 'ACTIVA'" class="btn-cancel" (click)="onCancelReserva(r)"
               title="Cancelar Reserva">
               <i class="uil uil-times-circle"> Cancelar</i>

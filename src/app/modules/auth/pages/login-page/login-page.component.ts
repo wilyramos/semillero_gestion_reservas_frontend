@@ -9,7 +9,6 @@ import { AuthService } from '@modules/auth/services/auth.service';
   styleUrls: ['./login-page.component.css']
 })
 
-
 export class LoginPageComponent {
   formLogin: FormGroup = new FormGroup({});
   errorSession: boolean = false;

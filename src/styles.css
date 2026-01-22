@@ -1,130 +1,212 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* ===== Reset básico ===== */
+/* ========================
+   VARIABLES
+======================== */
+:root {
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+
+  --primary: #004254;
+  --primary-soft: #e6f2f4;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+
+  --border-soft: #e5e7eb;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+}
+
+/* ========================
+   RESET
+======================== */
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
 }
 
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.5;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-app);
+  color: var(--text-main);
+  line-height: 1.55;
 }
 
-/* ===== Texto ===== */
-h1,
-h2,
+/* ========================
+   TIPOGRAFÍA
+======================== */
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
 h3 {
-    margin: 0 0 1rem;
-    font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
 p {
-    margin: 0 0 1rem;
-    color: #475569;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
 }
 
-/* ===== Contenedores ===== */
-main,
-section,
-article {
-    padding: 1.5rem;
+/* ========================
+   LAYOUT
+======================== */
+main {
+  padding: 1.75rem;
 }
 
-/* ===== Formularios ===== */
+section {
+  margin-bottom: 2rem;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+}
+
+/* ========================
+   FORMULARIOS
+======================== */
 label {
-    display: block;
-    margin-bottom: 0.25rem;
-    font-size: 0.85rem;
-}
-
-input,
-select,
-textarea,
-button {
-    font-family: inherit;
-    font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 input,
 select,
 textarea {
-    width: 100%;
-    padding: 0.6rem;
-    margin-bottom: 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  background: white;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-    outline: none;
-    border-color: #2563eb;
+  outline: none;
+  border-color: var(--primary);
+  background: var(--primary-soft);
 }
 
-/* ===== Botones ===== */
+/* ========================
+   BOTONES. hacer que el button tenga espaciado con otros elementos
+======================== */
 button {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: none;
-    background: #2563eb;
-    color: white;
-    cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  background: var(--primary);
+  color: white;
+  transition: opacity 0.15s ease;
+  margin: 0.25rem;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--primary);
 }
 
 button:disabled {
-    opacity: 0.5;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-/* ===== Tablas ===== */
+/* ========================
+   TABLAS
+======================== */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 1.5rem;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-th,
-td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #e2e8f0;
-    text-align: left;
+thead {
+  background: var(--primary-soft);
 }
 
 th {
-    background: #f1f5f9;
-    font-size: 0.8rem;
-    color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary);
+  padding: 0.75rem;
+  text-align: left;
 }
 
-/* ===== Links ===== */
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 0.85rem;
+}
+
+tbody tr:hover {
+  background: #f3f9fa;
+}
+
+/* ========================
+   LINKS
+======================== */
 a {
-    color: #2563eb;
-    text-decoration: none;
+  color: var(--primary);
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* ===== Snackbar global ===== */
+/* ========================
+   ESTADOS ÚTILES
+======================== */
+.badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+/* ========================
+   SNACKBAR (Angular Material)
+======================== */
 .mdc-snackbar__surface {
-    background: white !important;
+  background: white !important;
 }
 
-.mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
-    color: #3f51b5 !important;
-}
-
-.mat-mdc-snack-bar-container .mat-mdc-button {
-    color: #3f51b5 !important;
-}
-
+.mat-mdc-snack-bar-container .mat-mdc-snack-bar-label,
+.mat-mdc-snack-bar-container .mat-mdc-button,
 .mat-mdc-snack-bar-container .mat-mdc-snack-bar-action {
-    color: #3f51b5 !important;
+  color: var(--primary) !important;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,42 +1,123 @@
+/* ========================
+   LOGIN LAYOUT
+======================== */
 .login-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f8fafc;
+  padding: 1rem;
 }
 
+/* ========================
+   FORM
+======================== */
 .form-login {
   width: 100%;
   max-width: 360px;
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 2rem 2rem 2.25rem;
+  border-radius: 12px;
 }
 
-.form-login h1 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* ========================
+   LOGO
+======================== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  color: #004254;
 }
 
+.logo i {
+  font-size: 1.8rem;
+}
+
+.logo span {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+/* ========================
+   FIELDS
+======================== */
 .field {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.25rem;
 }
 
+label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+  color: #64748b;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem 0.65rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+input:focus {
+  outline: none;
+  border-color: #004254;
+  background: #e6f2f4;
+}
+
+/* ========================
+   BUTTON
+======================== */
+button {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  border: none;
+  background: #004254;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================
+   ERRORES
+======================== */
 .error {
   display: block;
   margin-top: 0.25rem;
-  font-size: 0.75rem;
-  color: #ef4444;
+  font-size: 0.7rem;
+  color: #b91c1c;
 }
 
 .error-summary {
   margin-top: 1rem;
   padding: 0.6rem;
+  font-size: 0.75rem;
   text-align: center;
-  font-size: 0.8rem;
-  color: #ef4444;
-  background: #fee2e2;
+  color: #b91c1c;
+  background: #fef2f2;
   border-radius: 6px;
 }

@@ -24,7 +24,7 @@
                         <button class="btn btn-edit" (click)="openEditDialog(sala)">
                             Editar
                         </button>
-                        <button class="btn btn-delete" (click)="deleteRoom(sala.idSala!)">
+                        <button *appHasRole="['ROLE_ADMIN']" (click)="deleteRoom(sala.idSala!)">
                             Eliminar
                         </button>
                     </td>

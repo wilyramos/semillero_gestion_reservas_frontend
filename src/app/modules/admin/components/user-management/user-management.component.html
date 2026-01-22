@@ -1,10 +1,10 @@
+
 <div class="audit-container">
-    <header class="audit-header">
+    <header class="audit-header header-section ">
         <div class="header-info">
-            <p class="audit-subtitle">Administre las cuentas de usuario y sus permisos</p>
         </div>
         <div class="header-actions">
-            <button mat-raised-button color="primary" (click)="openUserForm()">
+            <button color="primary" (click)="openUserForm()">
                 <i class="uil uil-plus me-1"></i> Nuevo Usuario
             </button>
         </div>
@@ -27,13 +27,14 @@
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let u of usuarios">
+                    <tr *ngFor="let u of usuarios" [appHighlightRow]="'#eff6ff'">
                         <td class="cell-id">#{{ u.idUsuario }}</td>
                         <td class="fw-bold">{{ u.username }}</td>
                         <td>
                             <div class="role-list">
-                                <span *ngFor="let rol of u.roleNames" class="role-badge"
-                                    [class.admin]="rol === 'ROLE_ADMIN'">
+                                <span *ngFor="let rol of u.roleNames" 
+                                      class="role-badge"
+                                      [ngClass]="rol | statusColor">
                                     {{ rol }}
                                 </span>
                             </div>
