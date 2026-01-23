@@ -5,16 +5,18 @@ import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarPageComponent } from './pages/calendar-page/calendar-page.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { SharedModule } from '@shared/shared.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
-    CalendarPageComponent
+    CalendarPageComponent,
   ],
   imports: [
     CommonModule,
     CalendarRoutingModule,
     FullCalendarModule,
-    SharedModule
+    SharedModule,
+    MatSnackBarModule
   ]
 })
 export class CalendarModule { }

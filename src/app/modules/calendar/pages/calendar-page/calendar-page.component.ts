@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { ReservationsService } from '@modules/reservations/services/reservations.service';
-import { RoomsService } from '@modules/rooms/services/rooms.service'; // Asegura esta ruta
+import { RoomsService } from '@modules/rooms/services/rooms.service';
 import { Sala } from '@core/models/sala.model';
-import { CalendarOptions, EventClickArg, DateSelectArg, DatesSetArg } from '@fullcalendar/core';
+import { CalendarOptions, DatesSetArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import esLocale from '@fullcalendar/core/locales/es';
+import { ReservationFormComponent } from '@modules/reservations/components/reservation-form/reservation-form.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-calendar-page',
@@ -16,12 +19,16 @@ import esLocale from '@fullcalendar/core/locales/es';
 })
 export class CalendarPageComponent implements OnInit {
 
-  private currentUsername: string = '';
-
-  // Variables para el filtro de salas
+  // Listados y Filtros
   salas: Sala[] = [];
-  selectedSalaId: number | null = null;
 
+  // Modelos para los filtros
+  selectedSalaId: number | null = null;
+  selectedEstado: string = '';
+  searchUsername: string = '';
+  searchNombreSala: string = '';
+
+  private currentUsername: string = '';
   private lastInicio: string = '';
   private lastFin: string = '';
 
@@ -40,15 +47,16 @@ export class CalendarPageComponent implements OnInit {
     nowIndicator: true,
     selectable: true,
     height: 'auto',
-
     datesSet: this.handleDatesSet.bind(this),
     events: []
   };
 
   constructor(
     private reservationService: ReservationsService,
-    private roomsService: RoomsService, // Inyectamos RoomsService
-    private authService: AuthService
+    private roomsService: RoomsService,
+    private authService: AuthService,
+    private dialog: MatDialog
+
   ) {
     this.currentUsername = this.authService.getUsername();
   }
@@ -65,10 +73,9 @@ export class CalendarPageComponent implements OnInit {
   }
 
   /**
-   * Se dispara al cambiar la sala en el select
+   * Gatillo único para cualquier cambio en los filtros
    */
-  onSalaChange(): void {
-    // Si ya tenemos un rango de fechas cargado, refrescamos
+  onFilterChange(): void {
     if (this.lastInicio && this.lastFin) {
       this.fetchReservations(this.lastInicio, this.lastFin);
     }
@@ -81,8 +88,15 @@ export class CalendarPageComponent implements OnInit {
   }
 
   fetchReservations(inicio: string, fin: string): void {
-    // Pasamos el idSala al servicio (si es null, el servicio no lo enviará)
-    this.reservationService.searchByDates(inicio, fin, this.selectedSalaId || undefined).subscribe({
+    // Preparamos el objeto de filtros extra
+    const filters = {
+      idSala: this.selectedSalaId || undefined,
+      estado: this.selectedEstado || undefined,
+      username: this.searchUsername || undefined,
+      nombreSala: this.searchNombreSala || undefined
+    };
+
+    this.reservationService.searchByDates(inicio, fin, filters).subscribe({
       next: (reservations) => {
         const eventData = reservations.map(res => {
           const isMine = res.username === this.currentUsername;
@@ -103,7 +117,6 @@ export class CalendarPageComponent implements OnInit {
           };
         });
 
-        // RE-ASIGNAR EL OBJETO COMPLETO para forzar el renderizado
         this.calendarOptions = {
           ...this.calendarOptions,
           events: eventData
@@ -113,9 +126,33 @@ export class CalendarPageComponent implements OnInit {
     });
   }
 
+  resetFilters(): void {
+    this.selectedSalaId = null;
+    this.selectedEstado = '';
+    this.searchUsername = '';
+    this.searchNombreSala = '';
+    this.onFilterChange();
+  }
+
   private formatDate(date: Date): string {
     const pad = (n: number) => n < 10 ? '0' + n : n;
     return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()} ` +
       `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  }
+
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReservationFormComponent, {
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'saved') {
+        // Recargar las reservas en el calendario después de crear una nueva
+        if (this.lastInicio && this.lastFin) {
+          this.fetchReservations(this.lastInicio, this.lastFin);
+        }
+      }
+    });
   }
 }

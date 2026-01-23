@@ -14,6 +14,7 @@ function isTokenValid(token: string): boolean {
     return false;
   }
 }
+
 export const authGuard: CanActivateFn = (route, state) => {
 
   const cookieService = inject(CookieService);

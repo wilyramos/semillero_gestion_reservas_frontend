@@ -37,16 +37,23 @@ export class ReservationsService {
   }
 
 
-  searchByDates(inicio: string, fin: string, idSala?: number): Observable<Reserva[]> {
-    let params = new HttpParams()
-      .set('inicio', inicio)
-      .set('fin', fin);
-    if (idSala) {
-      params = params.set('idSala', idSala.toString());
-    }
+  searchByDates(
+  inicio: string, 
+  fin: string, 
+  extraFilters: { idSala?: number, estado?: string, username?: string, nombreSala?: string } = {}
+): Observable<Reserva[]> {
+  let params = new HttpParams()
+    .set('inicio', inicio)
+    .set('fin', fin);
 
-    return this.http.get<Reserva[]>(`${this.apiUrl}/buscar`, { params });
-  }
+  // Mapeo dinámico de filtros opcionales
+  if (extraFilters.idSala) params = params.set('idSala', extraFilters.idSala.toString());
+  if (extraFilters.estado) params = params.set('estado', extraFilters.estado);
+  if (extraFilters.username) params = params.set('username', extraFilters.username);
+  if (extraFilters.nombreSala) params = params.set('nombreSala', extraFilters.nombreSala);
+
+  return this.http.get<Reserva[]>(`${this.apiUrl}/buscar`, { params });
+}
 
   getReservasPageByUser(username: string, pagination: PaginationModel): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/paginado/${username}`, pagination);
